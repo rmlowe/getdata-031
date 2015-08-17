@@ -36,6 +36,14 @@ meansAndStds <- predictors[, meanOrStd]
 # Step 3
 # Use descriptive activity names to name the activities in the data set
 
+# Load the activity names
+activities <- readFromZip(filename = "UCI HAR Dataset/activity_labels.txt")
+names(activities) <- c("id", "name")
+
+
+# Step 4
+# Appropriately label the data set with descriptive variable names. 
+
 descriptiveNames <- function(x) gsub(pattern = "Mag",
                                      replacement = "Magnitude",
                                      x = gsub(pattern = "Gyro",
@@ -48,10 +56,6 @@ descriptiveNames <- function(x) gsub(pattern = "Mag",
                                                                          replacement = "Body",
                                                                          x = x)))))
 names(meansAndStds) <- descriptiveNames(features[meanOrStd])
-
-
-# Step 4
-# Appropriately label the data set with descriptive variable names. 
 
 
 # Step 5
