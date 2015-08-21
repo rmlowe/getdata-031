@@ -1,4 +1,5 @@
 library(dplyr)
+library(tidyr)
 
 # Create directory is necessary
 path <- "./data"
@@ -50,7 +51,7 @@ step2 <- step1[, retain]
 
 # Load the activity names
 activities <- readFromZip(filename = "UCI HAR Dataset/activity_labels.txt")
-names(activities) <- c("Activity.ID", "Activity.Name")
+names(activities) <- c("Activity.ID", "Activity")
 
 # Merge with the main data set
 names(step2)[67] <- "Activity.ID"
@@ -86,14 +87,18 @@ names(step34)[1:66] <- descriptiveNames(features[meanOrStd])
 # From the data set in step 4, create a second, independent tidy data set with the average of each
 # variable for each activity and each subject.
 
-# Read the subject IDs
+# Read the subject IDs, and combine with the rest of the data set
 subjectTrain <- readFromZip(filename = "UCI HAR Dataset/train/subject_train.txt")
 subjectTest <- readFromZip(filename = "UCI HAR Dataset/test/subject_test.txt")
 subject <- rbind(subjectTrain, subjectTest)
 names(subject) <- c("Subject")
 withSubject <- cbind(step34, subject)
+tidy <-
+  withSubject %>%
+  gather(key = Variable, value = Value, -Activity, -Subject) %>%
+  group_by(Activity, Subject, Variable) %>%
+  summarize(Average = mean(Value))
 
 
 # Create txt file
-tidy <- data.frame(foo = c("X", "Y"), bar = c(1, 2))
 write.table(x = tidy, file = "./data/tidy.txt", row.names = FALSE)
