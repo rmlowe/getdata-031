@@ -93,6 +93,8 @@ subjectTest <- readFromZip(filename = "UCI HAR Dataset/test/subject_test.txt")
 subject <- rbind(subjectTrain, subjectTest)
 names(subject) <- c("Subject")
 withSubject <- cbind(step34, subject)
+
+# Now create the tidy data
 tidy <-
   withSubject %>%
   gather(key = Variable, value = Value, -Activity, -Subject) %>%
