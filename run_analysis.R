@@ -7,7 +7,7 @@ if (!file.exists(path)) {
   dir.create(path)
 }
 
-# Download dataset if necessary
+# Download data set if necessary
 destfile = "./data/getdata-projectfiles-UCI HAR Dataset.zip"
 if (!file.exists(destfile)) {
   dataUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
