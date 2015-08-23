@@ -1,7 +1,7 @@
 library(dplyr)
 library(tidyr)
 
-# Create directory is necessary
+# Create directory if necessary
 path <- "./data"
 if (!file.exists(path)) {
   dir.create(path)
